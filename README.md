@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Static Job Listings
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Made using React, it is a Job Listing webpage that includes a filtering solution.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This is a solution to the [Job listings with filtering challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/job-listings-with-filtering-ivstIPCt). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-### `npm start`
+### The challenge
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Users should be able to:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- View the optimal layout for the site depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Filter job listings based on the categories
 
-### `npm test`
+## My process
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Built with
 
-### `npm run build`
+- Semantic HTML5 markup
+- CSS
+- Flexbox
+- [React](https://reactjs.org/) - JS library
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Coding Process
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The main challenge I had to go through was the filtering aspect of the application, as the JSON data is formated as an object in addition with nested arrays. So not only would the data have to be filtered and rendered, but also the filters must be shown in the top in the form of tags that are interactive and can be removed and re-render the immutable list.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+How this could first be achieved is by using the useEffect hook, which will monitor the side-effects of the render everytime a filter is added or removed.
 
-### `npm run eject`
+## JobList Component
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```js
+const filterJobs = (key, tag) => {
+    if (key === "languages" || key === "tools") {
+        setFilterTags((prevTags) => [...prevTags, { [key]: [tag] }]);
+    } else {
+        setFilterTags((prevTags) => [...prevTags, { [key]: tag }]);
+    }
+    isTagListOpen(true);
+};
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+...
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+useEffect(() => {
+    const filteredTable = jsonData.filter((job) => {
+        return filterTags.every((tag) => {
+            const [key, value] = Object.entries(tag)[0];
+            if (key === "languages" || key === "tools") {
+                return job[key].some((x) => x.includes(value));
+            } else {
+                return job[key] === value;
+            }
+        });
+    });
+    setFilterJobList(filteredTable);
+    if (filterTags.length < 1) {
+        isTagListOpen(false);
+    }
+}, [filterTags]);
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## JobCard Component - JSX
 
-## Learn More
+```jsx
+<div className="job-tags">
+	<button onClick={() => filterBtn("role", job.role)}>
+		<span>{job.role}</span>
+	</button>
+	...
+	{job.languages.map((lang) => (
+		<button onClick={() => filterBtn("languages", lang)}>
+			<span>{lang}</span>
+		</button>
+	))}
+	...
+</div>
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **How this works?**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In order for the re-rendering of a filtered list, state management would have to focus on two features; the filtered list and the tags. An array of objects that carries state of filtered tags would be matched with the JSON data rendered and re-render to a list that will match the conditions of the state.
 
-### Code Splitting
+Using useEffect, it will render each change using the dependency array that monitors the change of the filtered tags. Furthermore, with nested arrays, as long as it matches the keys with values of nested arrays, it will use the **.some**() method in order to match the array of the filtered tags with the nested array based on the key.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Lastly, depending on the viewport (mobile/desktop), the tag container will be positioned differently, absolute and static, in order to fully optimize UI for a user to maintain an easier experience in my webpage.
 
-### Analyzing the Bundle Size
+### Continued development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+To improve the webpage, I would have to implement in disabling the ability to repeat pressing the same filter button, which may include some refactoring the code in my joblist component. Should anyone give me some pointers and advice please message me via my website below with its details or add your comments in my Frontend Mentor solution page.
 
-### Making a Progressive Web App
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- My Website - [Danny Baldeon Abril Portfolio](https://salsabaga.github.io/dba_portfolio/)
+- Frontend Mentor - [@Salsabaga](https://www.frontendmentor.io/profile/Salsabaga)
