@@ -6,6 +6,10 @@
 
 This is a solution to the [Job listings with filtering challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/job-listings-with-filtering-ivstIPCt). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
+### Screenshot - Job Listing Preview
+
+![](/public/images/JobListing-preview.png)
+
 ### The challenge
 
 Users should be able to:
@@ -92,5 +96,6 @@ To improve the webpage, I would have to implement in disabling the ability to re
 
 ## Author
 
-- My Website - [Danny Baldeon Abril Portfolio](https://salsabaga.github.io/dba_portfolio/)
+- Solution Website - [Job-Listings](https://salsabaga.github.io/job-listings/)
+- My Portfolio - [Danny Baldeon Abril Portfolio](https://salsabaga.github.io/dba_portfolio/)
 - Frontend Mentor - [@Salsabaga](https://www.frontendmentor.io/profile/Salsabaga)
