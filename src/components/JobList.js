@@ -1,6 +1,7 @@
 import jsonData from "../data.json";
 import JobCard from "./JobCard";
 import Tags from "./Tags";
+import { v4 as uuidv4 } from "uuid";
 
 import { useState, useEffect } from "react";
 
@@ -10,6 +11,24 @@ const JobList = () => {
 	const [tagListOpen, isTagListOpen] = useState(false);
 
 	const filterJobs = (key, tag) => {
+		// See if key:tag already exists
+		for (let i = 0; i < filterTags.length; i++) {
+			if (key === "languages" || key === "tools") {
+				for (let k in filterTags[i]) {
+					if (k === key) {
+						for (let j = 0; j < filterTags[i][k].length; j++) {
+							console.log(filterTags[i][key][j]);
+							if (filterTags[i][key][j] === tag) {
+								return;
+							}
+						}
+					}
+				}
+			}
+			if (filterTags[i][key] === tag) {
+				return;
+			}
+		}
 		if (key === "languages" || key === "tools") {
 			setFilterTags((prevTags) => [...prevTags, { [key]: [tag] }]);
 		} else {
@@ -18,7 +37,6 @@ const JobList = () => {
 
 		isTagListOpen(true);
 	};
-
 	const deleteTag = (id) => {
 		setFilterTags((prevTags) => {
 			return prevTags.filter((tag, index) => {
@@ -55,7 +73,7 @@ const JobList = () => {
 			)}
 			<article className="card-container">
 				{filterJobList.map((job) => (
-					<JobCard key={job.id} job={job} filterBtn={filterJobs} />
+					<JobCard key={uuidv4()} job={job} filterBtn={filterJobs} />
 				))}
 			</article>
 		</section>

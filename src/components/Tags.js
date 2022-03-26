@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 const Tags = ({ tags, deleteTg, clearTg }) => {
 	return (
 		<section className="tags-container">
@@ -6,7 +8,7 @@ const Tags = ({ tags, deleteTg, clearTg }) => {
 					{tags.map((x, index) => {
 						let key = Object.keys(x)[0];
 						return (
-							<div key={key} className="tag">
+							<div key={uuidv4()} className="tag">
 								<div className="rm-text">{x[key]}</div>
 								<button onClick={() => deleteTg(index)}></button>
 							</div>
