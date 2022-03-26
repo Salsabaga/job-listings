@@ -17,7 +17,6 @@ const JobList = () => {
 				for (let k in filterTags[i]) {
 					if (k === key) {
 						for (let j = 0; j < filterTags[i][k].length; j++) {
-							console.log(filterTags[i][key][j]);
 							if (filterTags[i][key][j] === tag) {
 								return;
 							}
